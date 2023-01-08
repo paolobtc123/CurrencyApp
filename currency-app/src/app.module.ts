@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ExchangeDataModule } from './exchange-data/exchange-data.module';
@@ -13,7 +14,7 @@ import { ExchangeDataModule } from './exchange-data/exchange-data.module';
       "username": "currapp",
       "password": "currapp123",
       "database": "currencyapp",
-      "entities": ["src/**/**.entity{.ts,.js}"],
+      "entities":  [join(__dirname, '**', '*.entity.{ts,js}')],
       "synchronize": true
     }),
     ExchangeDataModule],
