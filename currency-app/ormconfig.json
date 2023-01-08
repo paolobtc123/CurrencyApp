@@ -1,0 +1,10 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "currapp",
+    "password": "currapp123",
+    "database": "currencyapp",
+    "entities": ["src/**/**.entity{.ts,.js}"],
+    "synchronize": true
+  }
