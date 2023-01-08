@@ -6,7 +6,16 @@ import { ExchangeDataModule } from './exchange-data/exchange-data.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(),
+    TypeOrmModule.forRoot({
+      "type": "mysql",
+      "host": "localhost",
+      "port": 3306,
+      "username": "currapp",
+      "password": "currapp123",
+      "database": "currencyapp",
+      "entities": ["src/**/**.entity{.ts,.js}"],
+      "synchronize": true
+    }),
     ExchangeDataModule],
   controllers: [AppController],
   providers: [AppService],
