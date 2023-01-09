@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
 @Entity()
 
@@ -13,19 +13,19 @@ export class ExchangeDataEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column('date') 
+    @CreateDateColumn() 
     "Date & Time":Date;   
 
-    @Column({ length: 25 })
+    @Column({ length: 3 })
     "Currency From":string;
 
-    @Column()
+    @Column({type: "decimal", precision: 7, scale: 7, default: 0})
     "Amount 1":number;
 
-    @Column({ length: 25 })
+    @Column({ length: 3 })
     "Currency To":string;
 
-    @Column()
+    @Column({type: "decimal", precision: 7, scale: 7, default: 0})
     "Amount 2":number;
 
     @Column({ length: 25 })

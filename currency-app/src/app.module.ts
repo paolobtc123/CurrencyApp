@@ -4,6 +4,10 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ExchangeDataModule } from './exchange-data/exchange-data.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { HttpModule } from '@nestjs/axios';
+import { TaskService } from './exchange-data/task.service';
+import { ExchangeDataService } from './exchange-data/exchange-data.service';
 
 @Module({
   imports: [
