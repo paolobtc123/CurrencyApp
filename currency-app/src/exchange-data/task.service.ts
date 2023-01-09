@@ -21,8 +21,8 @@ export class TaskService {
             .subscribe(async  (response:any) => {
                 console.log(response.data);
                 var exchangeData = new ExchangeDataEntity();
-                exchangeData['Amount 1'] = "1.0";
-                exchangeData['Amount 2'] = response.exchrate +"";
+                exchangeData['Amount 1'] = 1.0;
+                exchangeData['Amount 2'] = response.exchrate ;
                 exchangeData['Currency From'] = "USD";
                 exchangeData['Currency To'] = currency.toUpperCase();
                 exchangeData.Type = "Live Price";

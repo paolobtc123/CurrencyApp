@@ -19,13 +19,13 @@ export class ExchangeDataEntity {
     @Column({ length: 3 })
     "Currency From":string;
 
-    @Column({type: "decimal", precision: 7, scale: 7, default: 0})
+    @Column({type: "decimal", precision: 14, scale: 7, default: 0})
     "Amount 1":number;
 
     @Column({ length: 3 })
     "Currency To":string;
 
-    @Column({type: "decimal", precision: 7, scale: 7, default: 0})
+    @Column({type: "decimal", precision: 14, scale: 7, default: 0})
     "Amount 2":number;
 
     @Column({ length: 25 })
