@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { WebSocketServiceService } from './web-socket-service.service';
+import { WebSocketServiceService } from './events.gateway';
 
 describe('WebSocketServiceService', () => {
   let service: WebSocketServiceService;

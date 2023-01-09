@@ -6,14 +6,14 @@ import { ExchangeDataController } from './exchange-data.controller';
 import { TaskService } from './task.service';
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { ScheduleModule } from '@nestjs/schedule';
-import { WebSocketServiceService } from './web-socket-service.service';
+import { EventsGateway } from './events.gateway';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ExchangeDataEntity]),
   HttpModule,
   ScheduleModule.forRoot(),
   HttpModule],
-  providers: [TaskService,ExchangeDataService, WebSocketServiceService],
+  providers: [TaskService,ExchangeDataService, EventsGateway],
   controllers: [ExchangeDataController]
 })
 export class ExchangeDataModule {}

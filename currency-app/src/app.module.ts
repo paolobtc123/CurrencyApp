@@ -8,6 +8,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { HttpModule } from '@nestjs/axios';
 import { TaskService } from './exchange-data/task.service';
 import { ExchangeDataService } from './exchange-data/exchange-data.service';
+import { EventsGateway } from './exchange-data/events.gateway';
 
 @Module({
   imports: [
@@ -23,6 +24,6 @@ import { ExchangeDataService } from './exchange-data/exchange-data.service';
     }),
     ExchangeDataModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,EventsGateway],
 })
 export class AppModule {}

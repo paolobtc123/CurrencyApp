@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
 import { ExchangeDataEntity } from 'src/exchange-data/exchange-data.entity';
 import { ExchangeDataService } from 'src/exchange-data/exchange-data.service';
-import { WebSocketServiceService } from './web-socket-service.service';
+import { EventsGateway } from './events.gateway';
 
 @Injectable()
 export class TaskService {
@@ -11,7 +11,7 @@ export class TaskService {
     constructor(
         private readonly httpService: HttpService, 
         private _dataService: ExchangeDataService,
-        private readonly webSocketServiceService: WebSocketServiceService
+        private readonly eventsGateway: EventsGateway
         ) { }
 
         otherIsDone :boolean = false;
@@ -25,7 +25,7 @@ export class TaskService {
 
     getAndSaveData(currency: string) {
 
-        this.httpService.get("http://localhost:3000/exchange-data/" + currency)
+        this.httpService.get("http://localhost:3001/exchange-data/" + currency)
             .subscribe(async  (response:any) => {
                 //console.log(response);
                 var exchangeData = new ExchangeDataEntity();
@@ -46,7 +46,7 @@ export class TaskService {
 
     async  raiseEvent() {
         this._dataService.getExchangeData().then((response) => {
-            this.webSocketServiceService.SendDataToClients('exchangeData',response);        
+            this.eventsGateway.SendDataToClients('exchangeData',response);        
         });
     }
 }
