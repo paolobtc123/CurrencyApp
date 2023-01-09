@@ -1,9 +1,10 @@
-import { Controller ,Post, Body, Get, Put, Delete,Param} from '@nestjs/common';
+import { Body, Controller ,Get, Param, Post} from '@nestjs/common';
+import { ExchangeDataEntity } from './exchange-data.entity';
 import { ExchangeDataService } from './exchange-data.service';
 
 @Controller('exchange-data')
 export class ExchangeDataController {
-    constructor(private service: ExchangeDataService) { }
+    constructor(private readonly exchangeDataService:ExchangeDataService) { }
 
     @Get(':cur')
     get(@Param() params) {
@@ -16,13 +17,20 @@ export class ExchangeDataController {
             rate.exchrate = null;            
         }
         else if(cur.toUpperCase() == "BTC"){
-            rate.exchrate = 0.000062 + (rnd/1000000);
+            rate.exchrate = 0.0000620 + (rnd/1000000);
         }
         else if(cur.toUpperCase() == "ETH"){
-            rate.exchrate = 0.00082 + (rnd/100000);
+            rate.exchrate = 0.0008200 + (rnd/100000);
         }
         return rate;
         //for testing
       
+    }
+
+    @Post()
+    async post(@Body() exchangeDataEntity:ExchangeDataEntity){
+        exchangeDataEntity.Type = "Exchanged";
+        exchangeDataEntity.id = null;
+        this.exchangeDataService.InsertUpdateExchangeData(exchangeDataEntity);
     }
 }
