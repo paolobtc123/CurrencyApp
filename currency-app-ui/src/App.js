@@ -89,6 +89,7 @@ function App() {
     }
     setBtcRate(btcRateVal);
     setEthRate(ethRateVal);
+    setResult(cc,usd,btcRateVal,ethRateVal);
   }
 
   const [usd, setUSD] = useState(0);
@@ -100,27 +101,61 @@ function App() {
     if (validValue && !isNaN(validValue)) {
       setUSD( validValue);
       //usd = validValue;
-      setResult(cc,validValue);
+      setResult(cc,validValue,btcRate,ethRate);
     }
   }
 
   const handleChangeCC = (event) => {
     setCC(event.target.value);
     //cc = event.target.value;
-    setResult(event.target.value,usd);
+    setResult(event.target.value,usd,btcRate,ethRate);
   }
 
-  const [converted, setConverted] = useState();
+  const [converted, setConverted] = useState(1);
 
-  const setResult = (ccVal , usdVal ) => {
+  const setResult = (ccVal , usdVal , btcRateVal , ethRateVal ) => {
     if (ccVal == "BTC") {
-      setConverted( usdVal * btcRate);
+      setConverted( usdVal * btcRateVal);
     }
     if (ccVal == "ETH") {
-      setConverted(usdVal * ethRate) ;
+      setConverted(usdVal * ethRateVal) ;
     }
   }
 
+  const [isSaving, setIsSaving] = useState(false);
+
+  const save = async () => {
+    try {
+      setIsSaving(true);
+      const response = await fetch('http://localhost:3001/exchange-data', {
+        method: 'POST',
+        body: JSON.stringify({
+          "Currency From": "USD",
+          "Currency To": cc,
+          "Amount 1":usd,
+          "Amount 2": converted
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        console.error(`Error! status: ${response.status}`);
+      }
+
+      // const result = await response.json();
+
+      // console.log('result is: ', JSON.stringify(result, null, 4));
+
+      
+    } catch (err) {
+      console.error(err.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
   return (
     <div>
       <div>
@@ -132,7 +167,7 @@ function App() {
               </th>
               <th colSpan={5}></th>
             </tr>
-            <tr>
+            <tr className='smallFont'>
               <td>
                 Currency From
               </td>
@@ -174,7 +209,12 @@ function App() {
                 </select>
               </td>
               <td>
-                {converted}
+                {converted.toFixed(7)}
+              </td>
+              <td>
+              <button onClick={save}>
+                Save
+              </button> {isSaving && <h2>Saving...</h2>}
               </td>
             </tr>
           </tbody>
