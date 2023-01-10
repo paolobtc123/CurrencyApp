@@ -16,7 +16,7 @@ export class TaskService {
 
         otherIsDone :boolean = false;
 
-    @Interval(10000)
+    @Interval(20000)
     handleInterval() {
         this.otherIsDone = false;
         this.getAndSaveData("BTC");
@@ -25,7 +25,7 @@ export class TaskService {
 
     getAndSaveData(currency: string) {
 
-        this.httpService.get("http://localhost:3001/exchange-data/" + currency)
+        this.httpService.get("http://localhost:3001/exchange-data/rate/" + currency)
             .subscribe(async  (response:any) => {
                 //console.log(response);
                 var exchangeData = new ExchangeDataEntity();

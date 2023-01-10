@@ -6,7 +6,7 @@ import { ExchangeDataService } from './exchange-data.service';
 export class ExchangeDataController {
     constructor(private readonly exchangeDataService:ExchangeDataService) { }
 
-    @Get(':cur')
+    @Get('/rate/:cur')
     get(@Param() params) {
         var cur = params.cur;
         var rate = {
@@ -23,8 +23,12 @@ export class ExchangeDataController {
             rate.exchrate = 0.0008200 + (rnd/100000);
         }
         return rate;
-        //for testing
-      
+        //for testing      
+    }
+
+    @Get('/lastdata')
+    async getLastData(): Promise<ExchangeDataEntity[]>{
+        return this.exchangeDataService.getExchangeData();
     }
 
     @Post()
